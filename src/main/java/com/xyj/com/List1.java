@@ -1,6 +1,6 @@
 package com.xyj.com;
 
-public interface List<E> {
+public interface List1<E> {
      static final int ELEMENT_NOT_FIND=-1;
      void clear();
      int size();

@@ -1,6 +1,7 @@
 package com.xyj.com;
-/*链表实现*/
-public class LinkedList<E> extends AbstracList<E> {
+/*链表实现,相比数组列表  不会让费过多的内存
+* */
+public class SingleLinkedList1<E> extends AbstracList1<E> {
     private Node first;
 
     @Override
@@ -22,13 +23,14 @@ public class LinkedList<E> extends AbstracList<E> {
 
     @Override
     public Object set(int index, Object element) {
-        E element1 = node(index).element;
+         E element1 = node(index).element;
         node(index).element = (E) element;
         return element1;
     }
 
     @Override
     public E remove(int index) {
+        rangChecked(index);
         E element = node(index).element;
         if(index == 0){
           first = first.next;
@@ -76,7 +78,6 @@ public class LinkedList<E> extends AbstracList<E> {
     private static class Node<E>{
         E element;
         Node<E> next;
-
         public Node(E element, Node<E> next) {
             this.element = element;
             this.next = next;
@@ -85,7 +86,7 @@ public class LinkedList<E> extends AbstracList<E> {
 
     @Override
     public String toString() {
-        String s = "LinkedList:"+"size="+size+"[";
+        String s = "SingleLinkedList:"+"size="+size+"[";
         for(int a = 0;a<size;a++){
          s = s + node(a).element+",";
         }

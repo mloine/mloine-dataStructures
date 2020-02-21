@@ -3,17 +3,18 @@ package com.xyj.com;
 //实现动态数组
 /*
 缺点：内存空间的大量浪费
+提升空间：当前数组只会自动扩容  没实现自动缩容
 * */
-public class ArrayList<E> extends AbstracList{
+public class ArrayList1<E> extends AbstracList1 {
     private E[] elements;
     private static final int DEFAULT_CAPACITY=10;
-    public ArrayList(int capaticy){
+    public ArrayList1(int capaticy){
         if(capaticy <= DEFAULT_CAPACITY){
             capaticy = DEFAULT_CAPACITY;
         }
         elements = (E[]) new Object[capaticy];//所有的类都继承object
     }
-    public ArrayList(){
+    public ArrayList1(){
         this(DEFAULT_CAPACITY);
     }
     @Override
@@ -26,9 +27,7 @@ public class ArrayList<E> extends AbstracList{
     @Override
     public void add(int index, Object element){
         addsize(index);
-        if(index < 0 || index > size){
-            throw new IndexOutOfBoundsException("index:"+index+","+"size"+size);
-        }
+        addChecked(index);
         int i = size - 1;
         for(int a = i;a >= index;a--){
             elements[a+1]=elements[a];
@@ -44,6 +43,7 @@ public class ArrayList<E> extends AbstracList{
         return old;
     }
     @Override
+    /*o()*/
     public E remove(int index){
         E result = elements[index];
         int i = index + 1;

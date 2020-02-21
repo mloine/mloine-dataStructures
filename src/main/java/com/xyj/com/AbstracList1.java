@@ -1,6 +1,6 @@
 package com.xyj.com;
 
-public abstract class AbstracList<E> implements List<E>{
+public abstract class AbstracList1<E> implements List1<E> {
     protected int size;
 
     @Override
@@ -22,6 +22,11 @@ public abstract class AbstracList<E> implements List<E>{
 
     protected void rangChecked(int index){
         if(index < 0 || index >= size){
+            throw new IndexOutOfBoundsException("index:"+index+","+"size"+size);
+        }
+    }
+    protected void addChecked(int index){
+        if(index < 0 || index > size){
             throw new IndexOutOfBoundsException("index:"+index+","+"size"+size);
         }
     }
