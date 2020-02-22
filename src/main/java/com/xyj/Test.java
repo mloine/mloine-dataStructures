@@ -1,6 +1,7 @@
 package com.xyj;
 
-import com.DoubleLinkedList1;
+
+import com.xyj.com.DoubleLinkedList1;
 
 public class Test {
     public static void main(String[] args) {
