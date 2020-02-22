@@ -1,6 +1,6 @@
-package com.xyj.com;
+package com.xyj.listPackage;
 /*实现双向列表，相比单向列表提高效率*/
-public class DoubleLinkedList1<E> extends AbstracList1<E> {
+public class CricleDoubleLinkedList1<E> extends AbstracList1<E> {
     private Node<E> first;
     private Node<E> last;
     @Override
@@ -69,7 +69,7 @@ public class DoubleLinkedList1<E> extends AbstracList1<E> {
     }
 
     @Override
-    public E remove(E element) {
+    public E removeByelement(E element) {
         int indexof = indexof(element);
         return  remove(indexof);
     }
@@ -94,7 +94,7 @@ public class DoubleLinkedList1<E> extends AbstracList1<E> {
     }
     //寻找节点的位/*o()*/置的方法
     private Node<E> node(int index){
-        rangChecked(index);//检查索引是否正确
+        rangChecked(index);//检查索引是否正确.
         if(index <= (size>>1)){
             Node rnode = first;
             for(int i = 0 ;i<index;i++){
@@ -127,15 +127,24 @@ public class DoubleLinkedList1<E> extends AbstracList1<E> {
         }
     }
     //两个测试头尾节点的方法
-    public void TestElement(){
-        System.out.println("尾元素："+last.element);
-        System.out.println("尾元素的next元素 ："+last.next.element);
-        System.out.println("首元素的prv元素 ："+first.prve.element);
+    public String TestElement(){
+        String s = "DoubleLinkedList:"+"size="+size+"[";
+        for(int a = 0;a<size;a++){
+            s = s + node(a).prve.element+"_"+
+                    node(a).element+"_"+
+                    node(a).next.element
+                    +",";
+        }
+        if(size ==0){
+            return s+"]";
+        }else{
+            return s.substring(0, s.length() - 1) + "]";
+        }
     }
 
     @Override
     public String toString() {
-        String s = "DoubleLinkedList:"+"size="+size+"[";
+        String s = "size="+size+"[";
         for(int a = 0;a<size;a++){
             s = s + node(a).element+",";
         }
