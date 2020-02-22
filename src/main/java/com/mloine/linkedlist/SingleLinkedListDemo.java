@@ -34,12 +34,27 @@ public class SingleLinkedListDemo {
 
         //测试删除
         singleLinkedList.delByBo(1);
-        singleLinkedList.delByBo(4);
-        singleLinkedList.delByBo(2);
-        singleLinkedList.delByBo(3);
+//        singleLinkedList.delByBo(4);
+//        singleLinkedList.delByBo(2);
+//        singleLinkedList.delByBo(3);
 
         System.out.println("修改后的情况");
         singleLinkedList.list();
+
+        //1.连标有效数据长度
+        System.out.println("链表有效数据长度为：" + SingleLinkedList.getLength(singleLinkedList.getHeader()));
+
+        //2.查找单链表中倒数第k个节点
+        System.out.println("倒数第2个节点:" + SingleLinkedList.getReversalHeroNodeByIndex(singleLinkedList.getHeader(),2) );
+        System.out.println("倒数第4个节点:" + SingleLinkedList.getReversalHeroNodeByIndex(singleLinkedList.getHeader(),4) );
+
+        //3.单链表的反转
+        System.out.println("反转前的情况");
+        singleLinkedList.list();
+        SingleLinkedList.ReverseLinkedList(singleLinkedList.getHeader());
+        System.out.println("反转后的情况");
+        singleLinkedList.list();
+
     }
 }
 
@@ -48,6 +63,11 @@ class SingleLinkedList{
     //先初始化头节点 不存放具体的思路
     private HeroNode header = new HeroNode(0,"","");
 
+
+
+    public HeroNode getHeader() {
+        return header;
+    }
 
     /**
      * 添加节点到单项列表
@@ -175,6 +195,56 @@ class SingleLinkedList{
             System.out.printf("没有需要删除编号为%d的节点\n",no);
         }
     }
+
+    //1.获取单链表有效节点的个数 头节点的列表不统计
+    public static int getLength(HeroNode header){
+        if(header.next == null){return 0;}
+        int length = 0;
+
+        HeroNode headerCur = header.next;
+        while(headerCur != null){
+            length ++;
+            headerCur = headerCur.next;
+        }
+        return length;
+    }
+
+    //2.获取单链表倒数第k个节点
+    public static HeroNode getReversalHeroNodeByIndex(HeroNode header,int index){
+        if(header.next == null){return null;}
+        // 总个数
+        int length = getLength(header);
+        if(length == 0 || index <= 0 || index > length){return null;}
+
+        HeroNode tmp = header.next;
+        for (int i = 0; i < length - index; i++) {
+            tmp = tmp.next;
+        }
+
+        return tmp;
+
+    }
+
+    //3.反转单项链表 个人实现
+    public static void ReverseLinkedList(HeroNode header) {
+        if(header.next == null || header.next.next == null){return;}
+        // 临时头节点
+        HeroNode headerTmp = header.next;
+        HeroNode next = null;
+        HeroNode reverHeader = new HeroNode(0,"","");
+
+        while(headerTmp != null){
+            //暂存当前节点的下一个节点
+            next = headerTmp.next;
+            // 处理
+            headerTmp.next = reverHeader.next;
+            reverHeader.next = headerTmp;
+            //指向修改
+            headerTmp = next;
+        }
+        header.next = reverHeader.next;
+    }
+
 
 }
 
