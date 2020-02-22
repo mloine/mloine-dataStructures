@@ -1,4 +1,4 @@
-package com.xyj.com;
+package com.xyj.listPackage;
 
 public abstract class AbstracList1<E> implements List1<E> {
     protected int size;

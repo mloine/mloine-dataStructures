@@ -1,4 +1,4 @@
-package com.xyj.com;
+package com.xyj.listPackage;
 
 public interface List1<E> {
      static final int ELEMENT_NOT_FIND=-1;
@@ -15,7 +15,7 @@ public interface List1<E> {
 
      E remove(int index);
 
-     E remove(E element);
+     E removeByelement(E element);
 
      boolean contains(E element);
 
