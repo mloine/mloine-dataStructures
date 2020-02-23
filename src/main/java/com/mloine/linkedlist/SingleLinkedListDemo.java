@@ -1,4 +1,7 @@
 package com.mloine.linkedlist;
+
+import java.util.Stack;
+
 /**
  * @Author mloine
  * @Description 单链表
@@ -55,6 +58,24 @@ public class SingleLinkedListDemo {
         System.out.println("反转后的情况");
         singleLinkedList.list();
 
+        //4.从尾到头打印单链表
+        System.out.println("逆序打印 单链表 递归");
+        SingleLinkedList.printLinedListDesc(singleLinkedList.getHeader());
+        System.out.println("逆序打印 单链表 利用栈结构");
+        SingleLinkedList.printLinedListDescByStack(singleLinkedList.getHeader());
+
+
+        //5.合并
+        System.out.println("1列表");
+        singleLinkedList.list();
+        System.out.println("2列表");
+        SingleLinkedList singleLinkedList2 = new SingleLinkedList();
+        singleLinkedList2.add(new HeroNode(5, "宋江", "及时雨"));
+        singleLinkedList2.add(new HeroNode(6, "宋江", "及时雨"));
+        singleLinkedList2.add(new HeroNode(7, "宋江", "及时雨"));
+        singleLinkedList2.list();
+        System.out.println("合并后列表");
+        SingleLinkedList.mergeLinedList(singleLinkedList.getHeader(),singleLinkedList2.getHeader()).list();
     }
 }
 
@@ -243,6 +264,82 @@ class SingleLinkedList{
             headerTmp = next;
         }
         header.next = reverHeader.next;
+    }
+
+    //4.逆序打印单链表 个人实现 递归
+    public static void printLinedListDesc(HeroNode header){
+        HeroNode tmp = header.next;
+        if(tmp != null){
+            printLinedListDesc(tmp);
+            System.out.println(tmp);
+        }
+    }
+    //4.逆序打印单链表 栈结构 栈 先进后出
+    public static void printLinedListDescByStack(HeroNode header){
+        if(header.next == null){return;}
+        Stack<HeroNode> heroNodeStack = new Stack<>();
+        HeroNode tmp = header.next;
+        while(tmp!=null){
+            heroNodeStack.push(tmp);
+            tmp = tmp.next;
+        }
+
+        while(heroNodeStack.size() > 0){
+            System.out.println(heroNodeStack.pop());
+        }
+    }
+
+    //5.合并两个链表,结果有序
+    public static SingleLinkedList mergeLinedList(HeroNode header1,HeroNode header2){
+        HeroNode sortTmp = null;
+        //1.先排序插入
+        SingleLinkedList singleLinkedList1 = new SingleLinkedList();
+        sortTmp = header1.next;
+        while(sortTmp != null){
+            HeroNode next = sortTmp.next;
+            singleLinkedList1.addSort(sortTmp);
+            sortTmp = next;
+        }
+        sortTmp = header2.next;
+        while(sortTmp != null){
+            HeroNode next = sortTmp.next;
+            singleLinkedList1.addSort(sortTmp);
+            sortTmp = next;
+        }
+        return singleLinkedList1;
+        //2.处理
+//        SingleLinkedList singleLinkedList = new SingleLinkedList();
+//        HeroNode tmp = singleLinkedList.header;
+//        HeroNode tmp1 = header1.next;
+//        HeroNode tmp2 = header2.next;
+//        boolean flag = true;
+//        while(flag){
+//            if(tmp1 == null && tmp2 == null){
+//                flag = false;
+//            }else if(tmp1 == null){
+//                tmp.next = tmp2;
+//                tmp2 = tmp2.next;
+//            }else if(tmp2 == null){
+//                tmp.next = tmp1;
+//                tmp1 = tmp1.next;
+//            }else {
+//                if(tmp1.no < tmp2.no){
+//                    tmp.next = tmp1;
+//                    tmp1 = tmp1.next;
+//                }else if(tmp1.no > tmp2.no){
+//                    tmp.next = tmp2;
+//                    tmp2 = tmp2.next;
+//                }else{
+//                    tmp.next = tmp1;
+//                    tmp1 = tmp1.next;
+//                    tmp.next = tmp2;
+//                    tmp2 = tmp2.next;
+//                }
+//            }
+//            tmp = tmp.next;
+//        }
+//
+//        return singleLinkedList;
     }
 
 
