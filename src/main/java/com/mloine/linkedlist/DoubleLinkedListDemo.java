@@ -7,6 +7,7 @@ package com.mloine.linkedlist;
 public class DoubleLinkedListDemo {
 
     public static void main(String[] args) {
+
         //创建节点
         HeroNode2 hero1 = new HeroNode2(1, "宋江", "及时雨");
         HeroNode2 hero2 = new HeroNode2(2, "卢俊义", "玉麒麟");
