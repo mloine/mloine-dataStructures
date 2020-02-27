@@ -1,6 +1,8 @@
 package com.xyj.model;
 
-public class Person {
+import java.util.Comparator;
+
+public class Person implements Comparator,Comparable {
     private int age;
     private String name;
 
@@ -34,6 +36,11 @@ public class Person {
     }
 
     @Override
+    public int compare(Object o1, Object o2) {
+        return ((Person)o1).getAge()  - ((Person)o2).getAge();
+    }
+
+    @Override
     public boolean equals(Object obj) {
         if(obj == null){
             return false;
@@ -51,5 +58,10 @@ public class Person {
     protected void finalize() throws Throwable {
         super.finalize();
         System.out.println("person 被销毁");
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        return this.getAge()-((Person)o).getAge();
     }
 }
