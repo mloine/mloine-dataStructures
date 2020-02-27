@@ -40,12 +40,18 @@ public abstract class AbstartPrintTree implements PrintlnTree {
     public ArrayList<StringBuffer> deleteMore(ArrayList<StringBuffer> list) {
         ArrayList<StringBuffer> result = new ArrayList<>();
         int size = list.size()-3;
+        int length = list.get(0).length();
+        StringBuffer kong = new StringBuffer();
+        for(int cc = 0;cc <length;cc++){ kong.append(" "); }
         for(int a =0;a<size;a++){
-            if(!list.get(a).toString().equals(list.get(a+1).toString())||
-                    !list.get(a).toString().equals(list.get(a+2).toString())||
-                    !list.get(a).toString().equals(list.get(a+3).toString())
-            ){
-                result.add(list.get(a));
+            String listString =  list.get(a).toString();
+            if (!listString.equals(kong.toString())) {
+                if(!listString.equals(list.get(a+1).toString())||
+                        !listString.equals(list.get(a+2).toString())||
+                        !listString.equals(list.get(a+3).toString())
+                ){
+                    result.add(list.get(a));
+                }
             }
         }
         return result;
