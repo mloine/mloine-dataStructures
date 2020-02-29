@@ -1,100 +1,20 @@
 package com.xyj.treePackage;
 
-
-import com.xyj.utils.AbstartPrintTree;
-
-import java.util.ArrayList;
-import java.util.Comparator;
+import java.util.*;
 
 //二叉搜索树
 //特点：  比根节点大的放右边    小的放左边
-public class BinarySearchTree<E> extends AbstartPrintTree {
-
-    /*数据的规模  二叉搜索树里没有索引的概念
-    * */
-    private int size;
-
-    //二叉树的根节点
-    private Node<E> root;
+public class BinarySearchTree<E>  extends BinaryTree{
 
     //比较器
     private Comparator comparator;
+
 
     public BinarySearchTree(Comparator comparetor){
             this.comparator =  comparetor;
     }
 
     public BinarySearchTree() {
-    }
-
-
-
-    @Override
-    public Object getRoot() {
-        return root;
-    }
-
-    @Override
-    public Object right(Object o) {
-        Node o1 = (Node) o;
-        return o1.right;
-    }
-
-    @Override
-    public Object left(Object o) {
-        Node o1 = (Node) o;
-        return o1.left;
-    }
-
-    @Override
-    public Object getNodeElement(Object o) {
-        Node o1 = (Node) o;
-        return o1.element;
-    }
-
-
-    //内部节点
-    private static class Node<E>{
-
-        //元素
-        E element;
-
-        //左子树
-        Node<E> left;
-
-        //右子树
-        Node<E> right;
-
-        //父节点
-        Node<E> parent;
-
-        public Node(E element,Node<E> parent) {
-            this.parent = parent;
-            this.element = element;
-        }
-
-        public Node() {
-        }
-
-        @Override
-        public java.lang.String toString() {
-            return element.toString();
-        }
-    }
-
-    //返回数据规模
-    public int size(){
-        return size;
-    }
-
-    //查看是否为空
-    public boolean isEmpty(){
-        return size == 0;
-    }
-
-    //清空树
-    public void clear(){
-
     }
 
     //向树内添加元素
@@ -122,6 +42,8 @@ public class BinarySearchTree<E> extends AbstartPrintTree {
             }else if(c < 0 ){
                     eNode = eNode.left;
             }else{//相等的情况
+                //为什么要覆盖，因为自定义类的比较方法是自定义的，可能相等，但值不相等
+                eNode.element=element;
                 return;
             }
         }
@@ -129,7 +51,7 @@ public class BinarySearchTree<E> extends AbstartPrintTree {
         //找到父节点 看看要插入那个子树
         if(c > 0){
             parent.right = new Node<E>(element,parent);
-        }else if(c < 0){
+        }else{
             parent.left = new Node<E>(element,parent);
         }
         size++;
@@ -137,12 +59,69 @@ public class BinarySearchTree<E> extends AbstartPrintTree {
 
     //移除树内某个元素
     public void remove(E element){
-
+        Node<E> nodeByElement = getNodeByElement(element);
+        if(nodeByElement == null){return;}
+        remove(nodeByElement);
+    }
+    //内部移除节点
+    private void remove(Node<E> node){
+        //这里node不会是空的
+        if (node.hasTwoChild()) {
+            //找到后继节点
+            Node<E> s = postNode(node);
+            node.element = s.element;
+            //删除后继节点
+            node = s;
+        }
+        //来到这里必然是度为0或1的节点
+        Node<E> replcement = node.left != null ? node.left : node.right;
+        if(replcement != null){
+            //在这里node是度为1的节点
+            replcement.parent = node.parent;
+            if(node.parent != null)
+            {
+                if(node.parent.left == node){
+                    node.parent.left = replcement;
+                }else{
+                    node.parent.right = replcement;
+                }
+            }else{
+                root = replcement;
+            }
+        }else{
+            //在这里node是叶子节点
+            if(node.parent == null){
+                //这里node是根节点
+                node = null;
+            }else{
+                //这里不是根节点的叶子节点
+                if(node == node.parent.right){
+                    node.parent.right = null;
+                }else{
+                    node.parent.left = null;
+                }
+            }
+        }
+        size--;
+    }
+    //通过element查找节点
+    private Node<E> getNodeByElement(E element){
+        Node<E> node = root;
+        while(node != null){
+            int compare = compare(element, node.element);
+            if(compare == 0){return node;}
+            if(compare < 0 ){
+                node = node.left;
+            }else{
+                node = node.right;
+            }
+        }
+        return null;
     }
 
     //查看树内是否包含
     public boolean contains(E element){
-        return true;
+        return getNodeByElement(element) != null;
     }
 
     //判断不是空元素
@@ -169,4 +148,6 @@ public class BinarySearchTree<E> extends AbstartPrintTree {
 
         return "";
     }
+
+
 }
